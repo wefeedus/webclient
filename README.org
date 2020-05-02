@@ -1,0 +1,247 @@
+* We Feed Us
+  :PROPERTIES:
+  :CUSTOM_ID: h:c936681d-e6b7-4d15-95ab-67c725fe3953
+  :END:
+
+** Motivation
+   :PROPERTIES:
+   :CUSTOM_ID: h:3859c00d-f892-47b2-9879-3d32f16f059e
+   :END:
+
+ This repository contains a prototype mapping app for the global food system.
+ The goal of this project is a global, comprehensive, open source mapping of our
+ food supply chains including the demand side. From comparable past economic
+ crises such as the great depression of the 1930s we can predict market failures
+ in allocating essential goods in the next months not just in poor countries.
+ Compared to the 1930s most of our goods depend critically on international
+ supply chains and hence our chronic lack of international governance bodies
+ that can intervene to coordinate national efforts against market failures
+ render us arguably worse prepared than the nation states of the 1930s.
+
+ Signs of the market failures are already visible as ripple effects popping up
+ as food dumps and destruction in the media, besides the horrific messages about
+ [[https://www.youtube.com/watch?v=tdrJjyADDmM][pending hunger catastrophies]] in poor countries such as India, East African
+ states or parts of Latin America. As the economic downturn of the global
+ economy sharpens the effects on supply chains become very hard to predict even
+ for corporate actors. By explicitly mapping supply and demand of food related
+ goods we want to facilitate direct allocation and interventions through
+ governance bodies and direct collective coordination to minimize food
+ shortages. A systematic effort to quantifying the goods flowing through our
+ global economy is therefore required. This project is about providing tooling
+ for such efforts.
+
+** Preconditions
+   :PROPERTIES:
+   :CUSTOM_ID: h:4656009e-1c51-427f-a67a-d80d7f1b942d
+   :END:
+   - Contributors care about food security and do not want to blindly trust that
+     this crisis is managed well by some people without having public
+     transparency.
+   - Contributors want to coordinate globally to map food supply chains.
+   - Technical contributors have access to a Unix machine with node.js support
+     and are willing to setup a shadow-cljs workflow. To run the server they need
+     to have [[https://leiningen.org/][leiningen]] and a JDK >= 8 installed.
+  
+ 
+** Postconditions
+   :PROPERTIES:
+   :CUSTOM_ID: h:35d3e832-bad5-4c68-97da-9d4992c7e5fc
+   :END:
+   - We have a set of publicly available services at hand to map food supply
+     chain information and do quantitative account to ensure integrity of the
+     supply chain.
+   - We have not let millions of people starve because of a lack of coordination
+     and the ignorance of the media bubbles in first world countries.
+   - We have collected crucial information to tackle the biggest problems of the
+     21st century such as climate change.
+    
+
+** Target audience
+   :PROPERTIES:
+   :CUSTOM_ID: h:6df96dba-2fd0-46a1-9e8a-c2e1c1e7b6e9
+   :END:
+
+ This is an early effort, yet the urgency and uncertainty of the situation
+ convinced us to push as much as possible while iteratively rethinking on the
+ way. We cannot yet expose this tool to a large audience, but we want to make it
+ accessible as soon as possible. If you have constructive or critical suggestions
+ please join our [[https://t.me/joinchat/BL1x7hgkCwwW8MqOKsFpvg][chat]] or open an issue here. Our tooling is deliberately not
+ aimed at direct automation, e.g. firehosing news sources onto the map, since
+ this will obscure how the tools will be used. Instead we need to figure the
+ processes out with our community of users (read: you! :) ). We have experience
+ in building scalable systems and will be able to scale up quickly once we know
+ what we need. In particular we are able to provide modern economic tools for
+ compositional game theory, probabilistic simulations and planning. To get to a
+ state were we can benefit from this technology we need to systematically measure
+ and quantify what is going on though. If you think this is a good investment of
+ your time in these "interesting times", join us!
+
+
+** Technology
+   :PROPERTIES:
+   :CUSTOM_ID: h:db1ea4ba-6fc0-4edf-b711-e54bee44f07b
+   :END:
+
+ We will provide P2P [[https://lambdaforge.io/2019/12/08/replicate-datahike-wherever-you-go.html][real time streams]] on our horizontally read scalable [[http://github.com/replikativ/datahike][database
+ technology]]. We are in the process of creating a globally addressable registry of
+ such databases which track important public information in form of knowledge
+ commons. If you are interested in providing such a database, please open up an
+ issue here.
+
+ We use the pragmatic functional programming language [[https://clojure.org][Clojure]] which emphasizes
+ short feedback cycles and interactive development. To setup an interactive
+ development environment for this web frontend, please take a look at [[https://shadow-cljs.org/][shadow-cljs]].
+
+ This prototype uses [[https://github.com/replikativ/datahike-server/][datahike-server]] as a backend, which will probably be
+ replaced by a dedicated backend with geo indexing support in the next
+ iterations. 
+
+ You need to clone the datahike server repository and run it locally by executing
+
+ #+BEGIN_SRC bash
+ lein run
+ #+END_SRC
+
+ in the cloned directory.
+
+ To build the static fields for the frontend you have to clone the repository and
+ then run the following commands in the directory:
+
+ #+BEGIN_SRC bash
+   npm install
+   npx shadow-cljs compile app
+ #+END_SRC
+
+ Any static web server will do it. If you have Python installed you can start a
+ simple web server:
+
+
+ #+BEGIN_SRC bash
+ cd resources/public && python -m http.server 8080
+ #+END_SRC
+
+ To build an optimized, bundled release run:
+ #+BEGIN_SRC bash
+   npx shadow-cljs release app
+ #+END_SRC
+
+** Development log
+   :PROPERTIES:
+   :CUSTOM_ID: h:61845e2d-b161-4e9a-80c8-92b0bd17fe8e
+   :END:
+
+*** DONE Load leaflet
+    CLOSED: [2020-04-30 Thu 00:11]
+    :PROPERTIES:
+    :CUSTOM_ID: h:9fe711a1-7df0-45d0-b721-dd01ae690718
+    :END:
+    - requires CSS
+    - https://wiki.openstreetmap.org/wiki/Tile_servers
+
+*** DONE Roundtrip basic markers
+    CLOSED: [2020-04-30 Thu 00:11]
+    :PROPERTIES:
+    :CUSTOM_ID: h:03434032-b359-4ace-a0e8-77584cf479d6
+    :END:
+    - TODO fix bug in result serialization
+
+*** DONE Input form for marker
+    CLOSED: [2020-04-30 Thu 14:32]
+    :PROPERTIES:
+    :CUSTOM_ID: h:fe81a4e1-47ac-4b04-a62b-4b3810c969aa
+    :END:
+    - https://www.reddit.com/r/Clojure/comments/f9blta/materialui_templates_in_hiccup_with_reagent/
+  
+*** DONE Selection UI
+    CLOSED: [2020-05-01 Fri 01:41]
+    :PROPERTIES:
+    :CUSTOM_ID: h:3a314b36-154c-45ae-8d2d-785cc8858d51
+    :END:
+    - range selector cannot show full date in label
+    - so we just use date selectors for now
+    - filtering happens client-side right now
+    - this will require adaptation once we have more data
+  
+*** DONE Highlight supply and demand markers
+    CLOSED: [2020-05-01 Fri 01:41]
+    :PROPERTIES:
+    :CUSTOM_ID: h:6009f337-1aeb-44a2-9c46-9202b33d1a5b
+    :END:
+    - requires custom marker designs with CSS
+
+*** DONE Add tag browsing support
+    CLOSED: [2020-05-01 Fri 12:03]
+    :PROPERTIES:
+    :CUSTOM_ID: h:03a53536-3d08-40cc-a2d0-ad5ad71c4fd0
+    :END:
+   
+*** Deploy first iteration
+    :PROPERTIES:
+    :CUSTOM_ID: h:31e430eb-aad3-4adf-887e-e9abb7eb9849
+    :END:
+**** DONE Define name
+     CLOSED: [2020-05-01 Fri 15:16]
+     :PROPERTIES:
+     :CUSTOM_ID: h:3adea572-fc72-45e5-90b1-5a72fe3695c1
+     :END:
+     - We Feed Us for now, problem is WeFeedUs Inc.
+     - Plan B is next stage
+**** DONE Add Telegram Chat
+     CLOSED: [2020-05-01 Fri 15:16]
+     :PROPERTIES:
+     :CUSTOM_ID: h:0ab3c661-e2ca-47e0-b87e-087a286434e4
+     :END:
+**** DONE Check UI roundtrip
+     CLOSED: [2020-05-01 Fri 16:03]
+     :PROPERTIES:
+     :CUSTOM_ID: h:49453f91-9331-4008-8915-ea469e03d268
+     :END:
+**** DONE Tune optics
+     CLOSED: [2020-05-01 Fri 20:04]
+     :PROPERTIES:
+     :CUSTOM_ID: h:3a1287c3-144e-4059-8b79-753f951c8de8
+     :END:
+     - reflect on protest groups, e.g. purple for feminist protests
+     - try to be bad ass, not too neutral
+     - https://material-ui.com/customization/color/
+**** DONE Factor static project
+     CLOSED: [2020-05-01 Fri 21:38]
+     :PROPERTIES:
+     :CUSTOM_ID: h:295d7e89-15b5-46ab-8132-518da81234eb
+     :END:
+***** Build instructions
+      :PROPERTIES:
+      :CUSTOM_ID: h:9f0e63dd-50a5-488f-a297-0e0141364c3a
+      :END:
+      1. npm install
+      2. npx shadow-cljs compile app
+      3. cd resources/public && python -m http.server 8080
+      4. npx shadow-cljs release app
+**** DONE Push static files
+     CLOSED: [2020-05-02 Sat 02:02]
+     :PROPERTIES:
+     :CUSTOM_ID: h:82fa0c19-1f0c-4384-937b-fa94de7df60c
+     :END:
+**** Add at least 20 markers all over the globe
+     :PROPERTIES:
+     :CUSTOM_ID: h:65c39c1e-317a-4e26-b6bf-66bcbbdb27af
+     :END:
+
+
+
+* Open Issues
+  :PROPERTIES:
+  :CUSTOM_ID: h:bc094cc6-61e9-4316-a689-a852393f0148
+  :END:
+  - document theory of global multidimensional accounting, refer to
+    http://wiki.p2pfoundation.net/Open_Value_Accounting
+  - introduce project governance by Votorola process
+  - try to acquire funding resources, e.g. [[https://opencollective.com/][opencollective]] once we establish the
+    first use cases
+  - provide interfaces to edit information
+    
+
+Copyright © 2020 Christian Weilbach and contributors
+
+Distributed under the MIT license.
+

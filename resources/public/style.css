@@ -1,0 +1,12 @@
+.github-banner
+{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    z-index: 2000;
+}
+
+body
+{
+    background-color: #424242;
+}
