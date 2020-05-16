@@ -18,7 +18,7 @@
             ["react-leaflet" :refer [Map, Marker, Popup, TileLayer]]))
 
 
-(def remote "localhost:3000")
+(def remote "wefeedus.topiq.es:3000")
 
 (def mui-formatter (tf/formatter "yyyy-MM-dd")) 
 
