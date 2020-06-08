@@ -334,6 +334,7 @@
                                    (swap! state
                                           #(-> %
                                              (assoc :add-event? false)
+                                             (assoc :add-event empty-event)
                                              (assoc :view-state :map))))))}
         "Submit"]
        [:> Button {:on-click (fn [_]
